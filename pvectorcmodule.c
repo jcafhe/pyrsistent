@@ -26,6 +26,7 @@ require to be exposed outside of this module.
 
 static PyTypeObject PVectorType;
 static PyTypeObject PVectorEvolverType;
+static PyTypeObject PVectorIterType;
 
 int SHIFT = 0;
 
@@ -1138,6 +1139,13 @@ PyObject* moduleinit(void) {
     return NULL;
   }
 
+  if (PyType_Ready(&PVectorIterType) < 0) {
+    return NULL;
+  }
+  
+    if (PyType_Ready(&PVectorEvolverType) < 0) {
+    return NULL;
+  }
 
 #if PY_MAJOR_VERSION >= 3
   m = PyModule_Create(&moduledef);
@@ -1196,7 +1204,8 @@ static PyMethodDef PVectorIter_methods[] = {
 };
 
 static PyTypeObject PVectorIterType = {
-    PyVarObject_HEAD_INIT(&PyType_Type, 0)
+	/* PyVarObject_HEAD_INIT(&PyType_Type, 0) */
+    PyVarObject_HEAD_INIT(NULL, 0)	
     "pvector_iterator",                         /* tp_name */
     sizeof(PVectorIter),                        /* tp_basicsize */
     0,                                          /* tp_itemsize */
@@ -1307,7 +1316,8 @@ static PyMethodDef PVectorEvolver_methods[] = {
 };
 
 static PyTypeObject PVectorEvolverType = {
-    PyVarObject_HEAD_INIT(&PyType_Type, 0)
+    /* PyVarObject_HEAD_INIT(&PyType_Type, 0) */
+    PyVarObject_HEAD_INIT(NULL, 0)
     "pvector_evolver",                          /* tp_name */
     sizeof(PVectorEvolver),                     /* tp_basicsize */
     0,                                          /* tp_itemsize */
