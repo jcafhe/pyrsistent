@@ -19,43 +19,43 @@ if platform.python_implementation() == 'CPython':
     extensions = [Extension('pvectorc', sources=['pvectorcmodule.c'])]
 
 
-class custom_build_ext(build_ext):
-    """Allow C extension building to fail."""
+# class custom_build_ext(build_ext):
+    # """Allow C extension building to fail."""
 
-    warning_message = """
-********************************************************************************
-WARNING: Could not build the %s. 
+    # warning_message = """
+# ********************************************************************************
+# WARNING: Could not build the %s. 
          
-         Pyrsistent will still work but performance may be degraded.
+         # Pyrsistent will still work but performance may be degraded.
          
-         %s
-********************************************************************************
-"""
+         # %s
+# ********************************************************************************
+# """
 
-    def run(self):
-        try:
-            build_ext.run(self)
-        except (CCompilerError, DistutilsExecError, DistutilsPlatformError):
-            e = sys.exc_info()[1]
-            sys.stdout.write('%s\n' % str(e))
-            warnings.warn(self.warning_message % ("Extension modules",
-                                                  "There was an issue with "
-                                                  "your platform configuration"
-                                                  " - see above."))
+    # def run(self):
+        # try:
+            # build_ext.run(self)
+        # except (CCompilerError, DistutilsExecError, DistutilsPlatformError):
+            # e = sys.exc_info()[1]
+            # sys.stdout.write('%s\n' % str(e))
+            # warnings.warn(self.warning_message % ("Extension modules",
+                                                  # "There was an issue with "
+                                                  # "your platform configuration"
+                                                  # " - see above."))
 
-    def build_extension(self, ext):
-        name = ext.name
-        try:
-            build_ext.build_extension(self, ext)
-        except (CCompilerError, DistutilsExecError, DistutilsPlatformError):
-            e = sys.exc_info()[1]
-            sys.stdout.write('%s\n' % str(e))
-            warnings.warn(self.warning_message % ("The %s extension "
-                                                  "module" % (name,),
-                                                  "The output above "
-                                                  "this warning shows how "
-                                                  "the compilation "
-                                                  "failed."))
+    # def build_extension(self, ext):
+        # name = ext.name
+        # try:
+            # build_ext.build_extension(self, ext)
+        # except (CCompilerError, DistutilsExecError, DistutilsPlatformError):
+            # e = sys.exc_info()[1]
+            # sys.stdout.write('%s\n' % str(e))
+            # warnings.warn(self.warning_message % ("The %s extension "
+                                                  # "module" % (name,),
+                                                  # "The output above "
+                                                  # "this warning shows how "
+                                                  # "the compilation "
+                                                  # "failed."))
 
 setup(
     name='pyrsistent',
@@ -80,7 +80,7 @@ setup(
     test_suite='tests',
     scripts=[],
     ext_modules=extensions,
-    cmdclass={"build_ext": custom_build_ext},
+    # cmdclass={"build_ext": custom_build_ext},
     install_requires=['six'],
     packages=['pyrsistent']
 )
