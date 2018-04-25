@@ -1157,6 +1157,11 @@ PyObject* moduleinit(void) {
     return NULL;
   }
 
+  #ifdef _MSC_VER
+  #  include <intrin.h>
+  #  define __builtin_popcount __popcnt
+  #endif
+  
   SHIFT = __builtin_popcount(BIT_MASK);
   
   if(EMPTY_VECTOR == NULL) {
